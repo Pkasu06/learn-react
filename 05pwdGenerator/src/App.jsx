@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
     passwordGenerator();
-  }, [length, numAllowed, charAllowed, setPassword])
+  }, [length, numAllowed, charAllowed, passwordGenerator])
 
   const passwordGenerator = useCallback(() => {
     let pass = "";
