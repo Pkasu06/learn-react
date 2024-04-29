@@ -9,10 +9,6 @@ function App() {
   const [charAllowed, setCharAllowed] = useState(false);
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    passwordGenerator();
-  }, [length, numAllowed, charAllowed, passwordGenerator])
-
   const passwordGenerator = useCallback(() => {
     let pass = "";
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -25,6 +21,10 @@ function App() {
     setPassword(pass);
 
   }, [length, numAllowed, charAllowed, setPassword])
+
+  useEffect(() => {
+    passwordGenerator();
+  }, [length, numAllowed, charAllowed, passwordGenerator])
 
   return (
     <>
