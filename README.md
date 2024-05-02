@@ -13,11 +13,11 @@ Read me file
 - 3) # Generate Configuration Files ( tailwind.config.js, postcss.config.js ) : 
     `npx tailwindcss init -p`
 - 4) # Configure source/template paths :
-    - In `tailwind.config.cjs` file add this 
+    - In `tailwind.config.js` file add this 
         ```
         content: [
             "./index.html",
-            "./src/**/*.{html,js, jsx, ts, tsx}"
+            "./src/**/*.{html,js,jsx,ts,tsx}"
         ],
         ```
 - 5) # Adding Tailwind CSS Directives to your CSS file
