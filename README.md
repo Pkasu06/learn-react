@@ -27,3 +27,6 @@ Read me file
     @tailwind components;
     @tailwind utilities;
     ```
+# To add React Roter Dom
+
+- `npm install react-router-dom`
