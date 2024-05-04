@@ -1,10 +1,27 @@
-import React, { useEffect } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
 function Github() {
-  useEffect
+  const data = useLoaderData();
+  //const [data, setData] = useState({});
+  // useEffect(() => {
+  //   fetch('https://api.github.com/users/hiteshchoudhary')
+  //   .then(res => res.json())
+  //   .then((data) => {
+  //     console.log(data);
+  //     setData(data)
+  //   })
+  // }, [])
   return (
-    <div className='text-center m-4 bg-gray-600 text-white p-4 text-3xl'>Github Followers:</div>
+    <>
+      <div className='text-center m-4 bg-gray-600 text-white p-4 text-3xl'>Github Followers: {data?.followers}</div>
+      <img src={data?.avatar_url} alt="Git Picture" width={300}/>
+    </>
   )
 }
 
 export default Github
+
+export const gitHubInfoLaoder = async () => {
+  const response = await fetch('https://api.github.com/users/hiteshchoudhary');
+  return response.json();
+}
