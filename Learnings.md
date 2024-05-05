@@ -135,5 +135,5 @@
             export default Profile
         ```
 13. ### 09themeSwitcher:
-    1. 
-        1. 
+    #### TODO
+    - [ ] Need to go through project again, if neede video as well again. Understand and write down the steps.
