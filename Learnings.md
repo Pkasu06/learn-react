@@ -48,3 +48,11 @@
     4. `<Link />, <NavLink />` usage.  Got to know about some features of `<NavLink />`
     #### TODO
     - [ ] Need to learn more about React Router through documentation
+
+11. ### Context API:
+    1. Learnt why context API is required --> To avoid prop chaining. Context API provides a central context like a global variable, where any component can read or update the data instead of prop chaining.
+    2. Other alternatives of Context AOI --> Redux: Redux Tool Kit (RTK), react-redux; Zustand are the popular ones.
+
+12. ### 08minContext:
+    1. 
+    2. 
