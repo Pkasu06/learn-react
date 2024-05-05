@@ -54,5 +54,83 @@
     2. Other alternatives of Context AOI --> Redux: Redux Tool Kit (RTK), react-redux; Zustand are the popular ones.
 
 12. ### 08minContext:
-    1. 
-    2. 
+    1. Learnt how to create context, provider, how to read and update data from context. Below are the steps:
+        1. Create "context" folder under src folder. 
+        2. Create a Context file(say UserContext.js).
+        3. Create a context variable(say UserContext), set `React.createContext()` to this variable and export the variable.
+        4. Create Context Provider file(say UserContextProvider.jsx).
+        5. In UserContextProvider file, wrap the code inside `<UserContext.Provider></UserContext.Provider>`. 
+        6. Create a state and add the state variable, state function(this is the data you want to make available to other components). Add "value attribute with values as this state variable, state function." like this: 
+            ```
+            const UserContextProvider = ({children}) => {
+                const [user, setUser] = useState(null);
+                return(
+                    <>
+                        <UserContext.Provider value={{user, setUser}}>
+                            {children}
+                        </UserContext.Provider>
+                    </>
+                )
+            }
+            ```
+        7. Now in `App.jsx` wrap the components with <UserContextPRovider> as below:
+            ```
+            function App() {
+                return (
+                    <UserContextProvider>
+                    <h1>Context API in React</h1>
+                    <Login />
+                    <Profile />
+                    </UserContextProvider>
+                )
+            }
+            ```
+        8. Updating values in context from child component: 
+        ```
+            import React, { useContext, useState } from 'react'
+            import UserContext from '../context/UserContext'
+
+            function Login() {
+
+                const [username, setUsername] = useState("")
+                const [password, setPassword] = useState("")
+
+                const {setUser} = useContext(UserContext);
+
+                const handleSubmit = (e) => {
+                    e.preventDefault();
+                    setUser({username, password});
+                }
+                return (
+                    <div>
+                        <h2>Login</h2>
+                        <input type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                        {"  "}
+                        <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <button onClick={handleSubmit} type="submit">Button</button>
+                    </div>
+                )
+            }
+
+            export default Login
+        ```
+        9. Getting data from context:
+
+        ```
+            import React, { useContext } from 'react'
+            import UserContext from '../context/UserContext'
+
+            function Profile() {
+
+                const {user} = useContext(UserContext)
+                if(!user) return <div>Please Login</div> 
+                return <div>Welcome {user.username}</div>
+                // return (
+                //     <>
+                //         {!user ? <div>Please Login</div> : `<div>Welcome ${user.username}</div>`}
+                //     </>
+                // )
+            }
+
+            export default Profile
+        ```
