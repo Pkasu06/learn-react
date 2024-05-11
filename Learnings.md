@@ -134,6 +134,105 @@
 
             export default Profile
         ```
-13. ### 09themeSwitcher:
-    #### TODO
-    - [ ] Need to go through project again, if neede video as well again. Understand and write down the steps.
+13. ### 09themeSwitcher: 
+    In this instead of writing seperate file for Context, ContextProvider, using `useContext` hook inside the child components to call context we can directly write everything in single file and use custom hook for calling the Context using `useContext` hook. 
+    
+    1. Below is the code of usage of `Theme.js`. Below while creating context itself we pass the values that need to added to the context, later these values or functions are declared
+    in the `Appp.jsx`
+    ```
+       import { createContext, useContext } from "react"
+
+        export const ThemeContext = createContext({
+            themeMode: "light",
+            darkTheme: () => {
+
+            },
+            lightTheme: () => {
+
+            },
+        });
+
+        export const ThemeProvider = ThemeContext.Provider
+
+        export const useTheme = () => {
+            return useContext(ThemeContext);
+        }
+    ```
+    2. `App.jsx`. We need to use the same variable, function names as we used inside while creating Context in `Theme.js` inside the values of the Provider, while declaring them in App.jsx as well 
+    ```
+        import { useEffect, useState } from 'react'
+        import reactLogo from './assets/react.svg'
+        import viteLogo from '/vite.svg'
+        import './App.css'
+        import ThemeBtn from './components/ThemeBtn'
+        import Card from './components/Card'
+        import { ThemeProvider } from './context/Theme'
+
+        function App() {
+
+        const [themeMode, setThemeMode] = useState("light");
+
+        const lightTheme = () => {
+            setThemeMode("light")
+        }
+
+        const darkTheme = () => {
+            setThemeMode("dark")
+        }
+
+        // actual change in theme
+
+        useEffect(() => {
+            document.querySelector('html').classList.remove("light", "dark");
+            document.querySelector('html').classList.add(themeMode);
+        }, [themeMode])
+        
+
+        return (
+            <ThemeProvider value={{themeMode, lightTheme, darkTheme}}>
+            <div className="flex flex-wrap min-h-screen items-center">
+                <div className="w-full">
+                    <div className="w-full max-w-sm mx-auto flex justify-end mb-4">
+                    <ThemeBtn />
+                    </div>
+                    <div className="w-full max-w-sm mx-auto">
+                    <Card />
+                    </div>
+                </div>
+            </div>
+            </ThemeProvider>
+        )
+        }
+
+        export default App
+    ```
+    3. use the variable, functions in context using `useTheme` custom hook. 
+    ```
+        import { useTheme } from "../context/Theme";
+
+        export default function ThemeBtn() {
+            const {themeMode, lightTheme, darkTheme} = useTheme();
+            const onChangeBtn = (e) => {
+                const darkModeStatus = e.currentTarget.checked;
+                if(darkModeStatus){
+                    darkTheme()
+                } else{
+                    lightTheme()
+                }
+                
+            }
+            return (
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        value=""
+                        className="sr-only peer"
+                        onChange={onChangeBtn}
+                        checked={themeMode === "dark"}
+                    />
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    <span className="ml-3 text-sm font-medium text-white-900">Toggle Theme</span>
+                </label>
+            );
+        }
+    ```
