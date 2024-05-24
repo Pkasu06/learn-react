@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
-import AuthService from '../appwrite/auth';
+import { Link, useNavigate } from 'react-router-dom'
+import authService from '../appwrite/auth';
 import { login } from '../store/authSlice';
+import Logo from './Logo';
+import Input from './Input';
+import Button from './Button';
 
 function Signup() {
     const navigate = useNavigate();
@@ -16,9 +19,9 @@ function Signup() {
         setError("")
         setLoading(true)
         try {
-            const session = await AuthService.createAccount(data);
+            const session = await authService.createAccount(data);
             if(session){
-                const userData = await AuthService.getCurrentUser();
+                const userData = await authService.getCurrentUser();
                 if(userData) dispatch(login(userData));
                 setLoading(false);
                 navigate("/")
@@ -32,7 +35,7 @@ function Signup() {
         <div className="flex items-center justify-center w-full">
             <div className='mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border-black/10'>
                 <div className='mb-2 flex justify-center'>
-                    <span class1Name='inline-block w-full max-w-[100px]'>
+                    <span className='inline-block w-full max-w-[100px]'>
                         <Logo width='100%'/>
                     </span>
                 </div>
